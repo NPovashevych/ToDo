@@ -1,0 +1,29 @@
+body {
+    margin: 20px;
+    background-color: cornsilk;
+}
+
+.sidebar-nav  {
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar {
+    background: antiquewhite;
+    padding: 0;
+}
+
+p {
+    padding-left: 10px;
+    font-size: larger;
+}
+
+td, th {
+    border: 2px solid #ddd5dd;
+    padding: 8px;
+    text-align: center;
+}
+
+.list-group-item {
+    background-color: beige;
+}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}
+  <title>Home page</title>
+{% endblock %}
+
+{% block content %}
+  <h1>My tasks list <a href="{% url 'tasks:task-create' %}" class="btn btn-primary">&#10133;</a></h1>
+  <br>
+  <br>
+  {% if task_list %}
+    {% for task in task_list %}
+      <h3>{{ task.content }}</h3>
+      <h5>Created: <strong>{{ task.created_time|date:"D d M Y" }} {{ task.created_time|time:"H:i" }}</strong></h5>
+      {% if task.deadline_time %}
+        <h5>Deadline: <strong>{{ task.deadline_time|date:"D d M Y" }} {{ task.deadline_time|time:"H:i" }}</strong></h5>
+      {% endif %}
+      <form action="{% url 'tasks:toggle-task' pk=task.id %}" method="post">
+        {% csrf_token %}
+        {% if task.is_done %}
+          <h5 style="color: green">
+            Execution status: <strong>Done</strong>
+            <button class="btn btn-warning" type="submit">Undo</button>
+          </h5>
+        {% else %}
+          <h5 style="color: red">
+            Execution status: <strong>Not done</strong>
+            <button class="btn btn-success" type="submit">Done</button>
+          </h5>
+        {% endif %}
+      </form>
+      <h5>Tags: 
+        {% if task.tags.all %}
+          {% for tag in task.tags.all %}
+            <strong>{{ tag.name }}</strong>
+          {% endfor %}
+        {% endif %}
+      </h5>
+      <br>
+      <a href="{% url 'tasks:task-update' pk=task.id %}">UPDATE</a>
+      <a href="{% url 'tasks:task-delete' pk=task.id %}" style="color: red;">DELETE</a>
+      <hr>
+      <hr>
+    {% endfor%}
+  {% else %}
+    <p>There are no task in list</p>  
+  {% endif %}
+{% endblock %}
