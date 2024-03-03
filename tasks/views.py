@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect
+
 from django.urls import reverse_lazy
-from django.views import generic
-from django.views.decorators.http import require_POST
+
+from django.views import generic, View
 
 from tasks.models import Task, Tag
 
@@ -64,9 +65,9 @@ class TagDeleteView(generic.DeleteView):
     success_url = reverse_lazy("tasks:tag-list")
 
 
-@require_POST
-def toggle_task(request, pk):
-    task = get_object_or_404(Task, pk=pk)
-    task.is_done = not task.is_done
-    task.save()
-    return redirect("tasks:index")
+class ToggleTaskView(View):
+    def post(self, request, pk):
+        task = get_object_or_404(Task, pk=pk)
+        task.is_done = not task.is_done
+        task.save()
+        return redirect("tasks:index")

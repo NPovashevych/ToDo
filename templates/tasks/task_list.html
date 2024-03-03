@@ -31,7 +31,7 @@
       <h5>Tags: 
         {% if task.tags.all %}
           {% for tag in task.tags.all %}
-            <strong>{{ tag.name }}</strong>
+            <strong>{{ tag.name }} |</strong>
           {% endfor %}
         {% endif %}
       </h5>
